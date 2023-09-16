@@ -17,4 +17,5 @@ jobs:
         run: echo "::set-output name=BUILD_VERSION::$(git rev-parse --short HEAD)-${{ github.run_number }}"
 
       - name: Display Build Version
-        run: echo "Build Version: ${{ steps.set_build_version.outputs.BUILD_VERSION }}"
+        run: |
+          echo "Build Version: ${{ steps.set_build_version.outputs.BUILD_VERSION }}"
