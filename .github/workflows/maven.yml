@@ -6,31 +6,28 @@
 # separate terms of service, privacy policy, and support
 # documentation.
 
-name: Maven Build
+name: Maven Build and Archive
 
 on:
   push:
-    branches: [ "main" ]
-  pull_request:
-    branches: [ "main" ]
+    branches: [ main ]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
-    - uses: actions/checkout@v3
-    - name: Set up JDK 17
-      uses: actions/setup-java@v3
-      with:
-        java-version: '17'
-        distribution: 'temurin'
-        cache: maven
-    - run: mvn clean install -DskipTests=true
+      - uses: actions/checkout@v3
 
-    - name: Archive JAR artifact
-      uses: actions/archive-artifacts@v3
-      with:
+      - uses: actions/setup-java@v3
+        with:
+          java-version: 17
+          distribution: 'temurin'
+
+      - run: mvn clean package -DskipTests=true
+
+      - name: Archive JAR artifact
+        uses: actions/archive-artifacts@v3
+        with:
           name: target/*.jar
           path: target
