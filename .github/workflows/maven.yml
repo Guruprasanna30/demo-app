@@ -32,11 +32,18 @@ jobs:
           name: my-artifacts
           path: target/*.jar
 
+      - name: Login to Docker hub
+        uses: docker/login-action@v1
+        with:
+          username: ${{ secrets.DOCKER_HUB_USERNAME }}
+          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
       - name: Build docker image
         run: |
           echo "GIT commit:  $GIT_COMMIT"
           echo "build version: $SHORT_COMMIT_SHA"
-        run: docker build -t guruprasanna30/numeric-app:$GIT_COMMIT .
+
+        run: docker build -t guruprasanna30/numeric-app:${{ github.sha }} .
 
       - name: Push Docker image to docker hub
-        run: docker push guruprasanna30/numeric-app:$GIT_COMMIT
+        run: docker push guruprasanna30/numeric-app:${{ github.sha }}
