@@ -10,7 +10,7 @@ name: Maven Build and Archive
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build:
@@ -22,12 +22,12 @@ jobs:
       - uses: actions/setup-java@v3
         with:
           java-version: 17
-          distribution: 'temurin'
+          distribution: "temurin"
 
       - run: mvn clean package -DskipTests=true
 
       - name: Archive JAR artifact
-        uses: actions/archive-artifacts@v3
+        uses: actions/upload-artifacts@v2
         with:
-          name: target/*.jar
-          path: target
+          name: my-artifacts
+          path: target/*.jar
