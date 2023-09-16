@@ -39,10 +39,6 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
       - name: Build docker image
-        run: |
-          echo "GIT commit:  $GIT_COMMIT"
-          echo "build version: $SHORT_COMMIT_SHA"
-
         run: docker build -t guruprasanna30/numeric-app:${{ github.sha }} .
 
       - name: Push Docker image to docker hub
