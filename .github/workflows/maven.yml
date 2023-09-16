@@ -33,7 +33,7 @@ jobs:
           path: target/*.jar
 
       - name: Build docker image
-        run: "docker build -t guruprasanna30/numeric-app:$GIT_COMMIT ."
+        run: docker build -t guruprasanna30/numeric-app:$GIT_COMMIT .
 
       - name: Push Docker image to docker hub
-        run: "docker push guruprasanna30/numeric-app:$GIT_COMMIT"
+        run: docker push guruprasanna30/numeric-app:$GIT_COMMIT
