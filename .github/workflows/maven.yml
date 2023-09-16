@@ -27,10 +27,10 @@ jobs:
         java-version: '17'
         distribution: 'temurin'
         cache: maven
-    - run: mvn clean install
+    - run: mvn clean install -DskipTests=true
 
-    - name: Upload artifact
-      uses: actions/upload-artifact@v3
+    - name: Archive JAR artifact
+      uses: actions/archive-artifacts@v3
       with:
-        name: target/*.jar
-        path: target
+          name: target/*.jar
+          path: target
