@@ -65,29 +65,24 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      #   - name: Set up kubectl
-      #     run: |
-      #       VERSION=$(curl --silent https://storage.googleapis.com/kubernetes-release/release/stable.txt)
-      #       curl "https://storage.googleapis.com/kubernetes-release/release/$VERSION/bin/linux/amd64/kubectl" \
-      #         --location --remote-name
-      #       chmod +x kubectl
-      #       sudo mv kubectl /usr/local/bin/
+      - name: Set up kubectl
+        run: |
+          VERSION=$(curl --silent https://storage.googleapis.com/kubernetes-release/release/stable.txt)
+          curl "https://storage.googleapis.com/kubernetes-release/release/$VERSION/bin/linux/amd64/kubectl" \
+            --location --remote-name
+          chmod +x kubectl
+          sudo mv kubectl /usr/local/bin/
 
-      #   - name: Update config file
-      #     run: |
-      #       echo "${{ secrets.KUBECONFIG }}" > kubeconfig.yaml
-      #       mkdir -p ~/.kube
-      #       mv kubeconfig.yaml ~/.kube/config
-      #       cd ~/.kube
-      #       pwd
-      #       cat ~/.kube/config
+      - name: Update config file
+        run: |
+          mkdir -p ${HOME}/.kube
+          echo "${{ secrets.KUBE_CONFIG }} | base64 --decode > ${HOME}/.kube/config
+          cd ~/.kube
+          pwd
+          cat ~/.kube/config
 
-      #   - name: Apply Kubernetes deployment
-      #     run: kubectl apply -f k8s_deployment_service.yaml
+      - name: Use context
+        run: kubectl config use-context kubernetes-admin@kubernetes
 
-      - name: Deploy application
-        uses: actions-hub/kubectl@master
-        env:
-          KUBE_CONFIG: ${{ secrets.KCONFIG }}
-        with:
-          args: apply -f k8s_deployment_service.yaml
+      - name: Apply Kubernetes deployment
+        run: kubectl apply -f k8s_deployment_service.yaml
