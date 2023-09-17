@@ -75,7 +75,6 @@ jobs:
 
       - name: Update config file
         run: |
-          echo "${{ secrets.KCONFIG }}" | base64 --decode > kubeconfig.yaml
           mkdir -p ~/.kube
           mv ${{ secrets.KCONFIG }} ~/.kube/config
           cd ~/.kube
