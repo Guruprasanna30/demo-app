@@ -82,7 +82,7 @@ jobs:
           cat ~/.kube/config
 
       - name: Use context
-        run: kubectl config use-context kubernetes-admin@kubernetes
+        run: kubectl config use-context docker-desktop
 
       - name: Apply Kubernetes deployment
         run: kubectl apply -f k8s_deployment_service.yaml
