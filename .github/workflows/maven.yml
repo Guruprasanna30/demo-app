@@ -29,8 +29,7 @@ jobs:
       - name: Checking the directory
         run: |
           ls -ltr
-          cd target
-          ls -ltr
+          ls -ltr target/*.jar
 
       # - name: Login to Docker hub
       #   uses: docker/login-action@v1
