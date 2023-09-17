@@ -36,6 +36,14 @@ jobs:
       - name: Unit testing
         run: mvn test
 
+      - run: mvn clean test jacoco:report
+
+      - name: Jacoco code coverage report
+        uses: actions/upload-artifact@v3
+        with:
+          name: Upload Jacoco code coverage report
+          path: target/site/jacoco
+
       # - name: Checking the directory
       #   run: |
       #     ls -ltr
