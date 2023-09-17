@@ -78,6 +78,9 @@ jobs:
           echo "${{ secrets.KUBECONFIG }}" | base64 --decode > kubeconfig.yaml
           mkdir -p ~/.kube
           mv kubeconfig.yaml ~/.kube/config
+          cd ~/.kube
+          pwd
+          cat ~/.kube/config
 
       - name: Apply Kubernetes deployment
         run: kubectl apply -f k8s_deployment_service.yaml
