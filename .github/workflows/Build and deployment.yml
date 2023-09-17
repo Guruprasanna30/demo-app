@@ -76,7 +76,7 @@ jobs:
       - name: Update config file
         run: |
           mkdir -p ${HOME}/.kube
-          echo "${{ secrets.KUBE_CONFIG }} | base64 --decode > ${HOME}/.kube/config
+          echo ${{ secrets.KUBE_CONFIG }} | base64 --decode > ${HOME}/.kube/config
           cd ~/.kube
           pwd
           cat ~/.kube/config
