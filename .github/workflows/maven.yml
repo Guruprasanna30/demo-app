@@ -26,14 +26,20 @@ jobs:
 
       - run: mvn clean package -DskipTests=true
 
-      - name: Login to Docker hub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+      - name: Checking the directory
+        run: |
+          ls -ltr
+          cd target
+          ls -ltr
 
-      - name: Build docker image
-        run: docker build -t guruprasanna30/numeric-app:$${{ github.run_number }} .
+      # - name: Login to Docker hub
+      #   uses: docker/login-action@v1
+      #   with:
+      #     username: ${{ secrets.DOCKER_HUB_USERNAME }}
+      #     password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
-      - name: Push Docker image to docker hub
-        run: docker push guruprasanna30/numeric-app:$${{ github.run_number }}
+      # - name: Build docker image
+      #   run: docker build -t guruprasanna30/numeric-app:$${{ github.run_number }} .
+
+      # - name: Push Docker image to docker hub
+      #   run: docker push guruprasanna30/numeric-app:$${{ github.run_number }}
