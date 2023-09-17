@@ -26,12 +26,6 @@ jobs:
 
       - run: mvn clean package -DskipTests=true
 
-      - name: Archive JAR artifact
-        uses: actions/upload-artifact@v3
-        with:
-          name: my-artifacts
-          path: target/*.jar
-
       - name: Login to Docker hub
         uses: docker/login-action@v1
         with:
