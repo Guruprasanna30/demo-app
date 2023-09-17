@@ -25,9 +25,13 @@ jobs:
           distribution: "temurin"
 
       - name: Build package
-        run: |
-          mvn clean package -DskipTests=true
-          archive 'target/*.jar'
+        run: mvn clean package -DskipTests=true
+
+      - name: Archive JAR
+        uses: actions/upload-artifact@v3
+        with:
+          name: JAR-Artifact
+          path: target/*.jar
 
       - name: Unit testing
         run: mvn test
