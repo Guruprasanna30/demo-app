@@ -39,9 +39,7 @@ jobs:
           password: ${{ secrets.DOCKER_HUB_PASSWORD }}
 
       - name: Build docker image
-        run: |
-          docker buildx create --name mybuilder --use
-          docker buildx build --platform linux/amd64,linux/arm64/v8 -t guruprasanna30/numeric-app:$${{ github.run_number }} .
+        run: docker build -t guruprasanna30/numeric-app:$${{ github.run_number }} .
 
       - name: Push Docker image to docker hub
         run: docker push guruprasanna30/numeric-app:$${{ github.run_number }}
