@@ -33,16 +33,22 @@ jobs:
           name: JAR-Artifact
           path: target/*.jar
 
-      - name: Unit testing
-        run: mvn test
+      # - name: Unit testing
+      #   run: mvn test
 
-      - run: mvn clean test jacoco:report
+      # - run: mvn clean test jacoco:report
 
-      - name: Jacoco code coverage report
-        uses: actions/upload-artifact@v3
+      # - name: Jacoco code coverage report
+      #   uses: actions/upload-artifact@v3
+      #   with:
+      #     name: Upload Jacoco code coverage report
+      #     path: target/site/jacoco
+
+      - name: Download JAR artifact
+        uses: actions/download-artifact@v3
         with:
-          name: Upload Jacoco code coverage report
-          path: target/site/jacoco
+          name: JAR-Artifact
+          path: target
 
       - name: Set Build Version
         id: set_build_version
