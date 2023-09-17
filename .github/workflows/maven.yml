@@ -24,21 +24,27 @@ jobs:
           java-version: 17
           distribution: "temurin"
 
-      - run: mvn clean package -DskipTests=true
-
-      - name: Checking the directory
+      - name: Build package
         run: |
-          ls -ltr
-          ls -ltr target/*.jar
+          mvn clean package -DskipTests=true
+          archive 'target/*.jar'
 
-      - name: Login to Docker hub
-        uses: docker/login-action@v1
-        with:
-          username: ${{ secrets.DOCKER_HUB_USERNAME }}
-          password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+      - name: Unit testing
+        run: mvn test
 
-      - name: Build docker image
-        run: docker build -t guruprasanna30/numeric-app:$${{ github.run_number }} .
+      # - name: Checking the directory
+      #   run: |
+      #     ls -ltr
+      #     ls -ltr target/*.jar
 
-      - name: Push Docker image to docker hub
-        run: docker push guruprasanna30/numeric-app:$${{ github.run_number }}
+      # - name: Login to Docker hub
+      #   uses: docker/login-action@v1
+      #   with:
+      #     username: ${{ secrets.DOCKER_HUB_USERNAME }}
+      #     password: ${{ secrets.DOCKER_HUB_PASSWORD }}
+
+      # - name: Build docker image
+      #   run: docker build -t guruprasanna30/numeric-app:$${{ github.run_number }} .
+
+      # - name: Push Docker image to docker hub
+      #   run: docker push guruprasanna30/numeric-app:$${{ github.run_number }}
