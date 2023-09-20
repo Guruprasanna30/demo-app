@@ -65,24 +65,43 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Set up kubectl
-        run: |
-          VERSION=$(curl --silent https://storage.googleapis.com/kubernetes-release/release/stable.txt)
-          curl "https://storage.googleapis.com/kubernetes-release/release/$VERSION/bin/linux/amd64/kubectl" \
-            --location --remote-name
-          chmod +x kubectl
-          sudo mv kubectl /usr/local/bin/
+      #   - name: Set up kubectl
+      #     run: |
+      #       VERSION=$(curl --silent https://storage.googleapis.com/kubernetes-release/release/stable.txt)
+      #       curl "https://storage.googleapis.com/kubernetes-release/release/$VERSION/bin/linux/amd64/kubectl" \
+      #         --location --remote-name
+      #       chmod +x kubectl
+      #       sudo mv kubectl /usr/local/bin/
 
-      - name: Update config file
-        run: |
-          mkdir -p ${HOME}/.kube
-          echo ${{ secrets.KUBE_CONFIG }} | base64 --decode > ${HOME}/.kube/config
-          cd ~/.kube
-          pwd
-          cat ~/.kube/config
+      #   - name: Update config file
+      #     run: |
+      #       mkdir -p ${HOME}/.kube
+      #       echo ${{ secrets.KUBE_CONFIG }} | base64 --decode > ${HOME}/.kube/config
+      #       cd ~/.kube
+      #       pwd
+      #       cat ~/.kube/config
 
-      - name: Use context
-        run: kubectl config use-context docker-desktop
+      #   - name: Use context
+      #     run: kubectl config use-context docker-desktop
 
-      - name: Apply Kubernetes deployment
+      #   - name: Apply Kubernetes deployment
+      #     run: kubectl apply -f k8s_deployment_service.yaml
+
+      - name: Setup Azure Cli
+        uses: azure/setup-azure-cli@v1
+        with:
+          azcliversion: 2.24.2
+
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDS }}
+
+      - name: Configure Kubectl
+        uses: azure/setup-kubectl@v1
+        with:
+          version: "1.21.3"
+          installKubectl: true
+
+      - name: Deploy to AKS
         run: kubectl apply -f k8s_deployment_service.yaml
