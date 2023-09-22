@@ -82,7 +82,7 @@ jobs:
           cat ~/.kube/config
 
       - name: Use context
-        run: kubectl config use-context clusterUser_ODL-azure-1089554_mycluster
+        run: kubectl config use-context mycluster
 
       - name: Apply Kubernetes deployment
         run: kubectl apply -f k8s_deployment_service.yaml
