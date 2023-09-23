@@ -79,7 +79,7 @@ jobs:
         run: |
           mkdir -p ${HOME}/.kube
           echo ${{ secrets.KUBE_CONFIG }} | base64 --decode > ${HOME}/.kube/config
-          sed -i 's#replace#guruprasanna30/numeric-app:${{  needs.build.outputs.version }}#g k8s_deployment_service.yaml'
+          sed -i 's#replace#guruprasanna30/numeric-app:${{  needs.build.outputs.version }}#g' k8s_deployment_service.yaml
 
       - name: Use context
         run: kubectl config use-context mycluster
