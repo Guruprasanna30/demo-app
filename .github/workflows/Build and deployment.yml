@@ -82,7 +82,7 @@ jobs:
           sed -i 's#replace#guruprasanna30/numeric-app:${{  needs.build.outputs.version }}#g' k8s_deployment_service.yaml
 
       - name: Use context
-        run: kubectl config use-context mycluster
+        run: kubectl config use-context testkubeservice
 
       - name: Deleting old deployment
         run: kubectl delete deploy devsecops && kubectl delete svc devsecops-svc
