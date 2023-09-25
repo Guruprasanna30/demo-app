@@ -84,8 +84,8 @@ jobs:
       - name: Use context
         run: kubectl config use-context testkubeservice
 
-      - name: Deleting old deployment
-        run: kubectl delete deploy devsecops && kubectl delete svc devsecops-svc
+      #   - name: Deleting old deployment
+      #     run: kubectl delete deploy devsecops && kubectl delete svc devsecops-svc
 
       - name: Apply Kubernetes deployment
         run: kubectl apply -f k8s_deployment_service.yaml
